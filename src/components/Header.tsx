@@ -1,0 +1,13 @@
+import './Header.css'
+
+export default function Header() {
+  return (
+    <header className="header">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+        <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+      </svg>
+      <span className="header-title">Funnair</span>
+      <span className="header-sub">Customer Support</span>
+    </header>
+  )
+}

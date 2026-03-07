@@ -1,0 +1,70 @@
+.admin-panel {
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.admin-loading {
+  padding: 32px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.admin-title {
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+/* Wrapper para scroll horizontal em mobile */
+.admin-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 480px;
+}
+
+.admin-table th {
+  background: var(--navy);
+  color: var(--white);
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.admin-table tr:hover td { background: #eef3f8; }
+
+.status-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-badge--confirmed { background: #e8f5e9; color: #2e7d32; }
+.status-badge--cancelled { background: #ffebee; color: #c62828; }
+
+/* =========================================================
+   Mobile  (≤ 768px)
+   ========================================================= */
+@media (max-width: 768px) {
+  .admin-panel {
+    padding: 14px 10px;
+    gap: 20px;
+  }
+}

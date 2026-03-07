@@ -1,0 +1,111 @@
+.context-panel {
+  flex: 1;
+  background: var(--bg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.context-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: #8fa5bc;
+  text-align: center;
+  padding: 32px;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.context-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+}
+
+/* Botão de fechar — oculto no desktop */
+.context-drawer-close {
+  display: none;
+}
+
+/* =========================================================
+   Mobile  (≤ 768px)
+   ========================================================= */
+@media (max-width: 768px) {
+  /* Backdrop escuro ao abrir o drawer */
+  .context-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    z-index: 100;
+    animation: backdrop-in .2s ease;
+  }
+
+  @keyframes backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Painel vira bottom sheet */
+  .context-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 78vh;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,.18);
+    z-index: 101;
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform .3s cubic-bezier(.4,0,.2,1), visibility .3s;
+    background: var(--bg);
+    overflow-y: auto;
+    /* não participa do flex do chat-layout */
+    flex: none;
+  }
+
+  .context-panel--open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  /* Drag handle visual */
+  .context-panel::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: #c0cfe0;
+    border-radius: 2px;
+    margin: 10px auto 4px;
+    flex-shrink: 0;
+  }
+
+  /* Botão fechar visível no mobile */
+  .context-drawer-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #e0e7ef;
+    color: var(--navy);
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  .context-cards {
+    padding: 10px 12px 24px;
+  }
+}
