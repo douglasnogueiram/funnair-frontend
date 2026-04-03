@@ -18,6 +18,16 @@ export default defineConfig({
           Authorization: 'Basic dXNlcjp1c2VyMTIz',
         },
       },
+      '/agent': {
+        target: 'http://localhost:8085',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/agent/, ''),
+      },
+      '/rag': {
+        target: 'http://localhost:8090',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/rag/, '/api'),
+      },
     },
   },
 })

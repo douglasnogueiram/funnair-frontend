@@ -85,6 +85,35 @@
   30%            { transform: translateY(-6px); }
 }
 
+/* ── Speak button ──────────────────────────────────────── */
+.speak-btn {
+  align-self: flex-end;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+
+.speak-btn:hover {
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.speak-btn--active {
+  color: var(--navy);
+  border-color: var(--navy);
+  background: #e8f0fb;
+}
+
 /* ── Input bar ─────────────────────────────────────────── */
 .chat-input-bar {
   display: flex;

@@ -1,3 +1,20 @@
+export type VoiceOption = 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer'
+export type AudioFormat = 'mp3' | 'opus' | 'aac' | 'flac' | 'wav'
+
+export interface VoiceConfig {
+  voice: VoiceOption
+  speed: number
+  responseFormat: AudioFormat
+  instructions: string
+}
+
+export const DEFAULT_VOICE_CONFIG: VoiceConfig = {
+  voice: 'nova',
+  speed: 1.0,
+  responseFormat: 'mp3',
+  instructions: '',
+}
+
 export interface Message {
   id: string
   role: 'user' | 'assistant'

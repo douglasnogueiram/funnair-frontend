@@ -1,17 +1,46 @@
 import { useEffect, useRef, useState, KeyboardEvent } from 'react'
 import Markdown from 'react-markdown'
-import { Message } from '../types'
+import { Message, VoiceConfig, DEFAULT_VOICE_CONFIG } from '../types'
+import { synthesizeSpeech } from '../api/speechApi'
 import './ChatPanel.css'
 
 interface Props {
   messages: Message[]
   isLoading: boolean
   onSend: (text: string) => void
+  voiceConfig?: VoiceConfig
 }
 
-export default function ChatPanel({ messages, isLoading, onSend }: Props) {
+export default function ChatPanel({ messages, isLoading, onSend, voiceConfig = DEFAULT_VOICE_CONFIG }: Props) {
   const [input, setInput] = useState('')
+  const [speakingId, setSpeakingId] = useState<string | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  const speak = async (id: string, text: string) => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current = null
+    }
+    if (speakingId === id) {
+      setSpeakingId(null)
+      return
+    }
+    setSpeakingId(id)
+    try {
+      const blob = await synthesizeSpeech(text, voiceConfig)
+      const url = URL.createObjectURL(blob)
+      const audio = new Audio(url)
+      audioRef.current = audio
+      audio.onended = () => {
+        setSpeakingId(null)
+        URL.revokeObjectURL(url)
+      }
+      audio.play()
+    } catch {
+      setSpeakingId(null)
+    }
+  }
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -49,6 +78,23 @@ export default function ChatPanel({ messages, isLoading, onSend }: Props) {
                 msg.content
               )}
             </div>
+            {msg.role === 'assistant' && msg.content && (
+              <button
+                className={`speak-btn${speakingId === msg.id ? ' speak-btn--active' : ''}`}
+                onClick={() => speak(msg.id, msg.content)}
+                title={speakingId === msg.id ? 'Parar áudio' : 'Ouvir resposta'}
+              >
+                {speakingId === msg.id ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 6h4v12H6zm8 0h4v12h-4z" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                  </svg>
+                )}
+              </button>
+            )}
           </div>
         ))}
         {isLoading && messages[messages.length - 1]?.role !== 'assistant' && (
